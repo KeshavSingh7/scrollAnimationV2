@@ -1,30 +1,41 @@
 const intro = document.querySelector(".intro");
-const video = intro.querySelector("video");
 const introText = intro.querySelector("h1");
-//const outro = document.querySelector(".outro");
-//const outroText = outro.querySelector("h1");
+const content = document.querySelector(".content");
+const video = content.querySelector("video");
+const contentText = content.querySelector("h1");
+const outro = document.querySelector(".outro");
+const outroText = outro.querySelector("h1");
 
 const controller = new ScrollMagic.Controller();
 
-let scene = new ScrollMagic.Scene({
-  duration: 22000,
-  triggerElement: intro,
+let scene2 = new ScrollMagic.Scene({
+  duration: 16000,
+  triggerElement: content,
   triggerHook: 0,
 })
   .addIndicators()
-  .setPin(intro)
+  .setPin(content)
+  .addTo(controller);
+
+const animation = gsap.fromTo(contentText, 3, { opacity: 1 }, { opacity: 0 });
+
+let scene3 = new ScrollMagic.Scene({
+  duration: 3000,
+  triggerElement: content,
+  triggerHook: 0,
+})
+  .setTween(animation)
   .addTo(controller);
 
 let accelamount = 0.5;
 let scrollpos = 0;
 let delay = 0;
 
-scene.on("update", (e) => {
+scene2.on("update", (e) => {
   scrollpos = e.scrollPos / 1000;
 });
 
 setInterval(() => {
   delay += (scrollpos - delay) * accelamount;
-  console.log(scrollpos, delay);
-  video.currentTime = scrollpos;
-}, 41.67);
+  video.currentTime = delay;
+}, 33.3);
